@@ -13,7 +13,7 @@ class Builder
   def initialize(redis_branch, tmp_dir)
     @redis_branch = redis_branch
     @tmp_dir = tmp_dir
-    @build_dir = File.join(@tmp_dir, "cache", "redis-#{redis_branch}")
+    @build_dir = File.join(@tmp_dir, "cache", "redis-#{redis_branch}", "redis-#{redis_branch}.0")
   end
 
   def run
@@ -38,7 +38,8 @@ class Builder
   end
 
   def tarball_url
-    "https://github.com/antirez/redis/archive/#{@redis_branch}.tar.gz"
+    # "https://github.com/antirez/redis/archive/#{@redis_branch}.tar.gz"
+    "https://download.redis.io/releases/redis-#{@redis_branch}.0.tar.gz"
   end
 
   def build
@@ -46,6 +47,7 @@ class Builder
     FileUtils.mkdir_p(@build_dir)
     command!('tar', 'xf', tarball_path, '-C', File.expand_path('../', @build_dir))
     Dir.chdir(@build_dir) do
+      command!('ls')
       command!('make')
     end
   end
