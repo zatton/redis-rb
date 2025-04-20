@@ -13,10 +13,6 @@ class Redis
         _fcall(:fcall, args)
       end
 
-      def evalsha(*args)
-        _eval(:evalsha, args)
-      end
-
       private
 
       def _fcall(cmd, args)
